@@ -35,3 +35,4 @@ def decrypt_caesar(text: str, shift: int = 3) -> str:
             plaintext = plaintext + char
     return plaintext
 
+
