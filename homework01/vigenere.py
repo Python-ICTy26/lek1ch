@@ -1,7 +1,7 @@
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = ""
-    alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    lowalphabet =alphabet.lower()
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    lowalphabet = alphabet.lower()
     key = len(keyword)
 
     for i in range(len(plaintext)):
@@ -12,13 +12,13 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             shift = ord(keyword[i % key]) - ord("a")
             ciphertext = ciphertext + lowalphabet[(lowalphabet.find(plaintext[i]) + shift) % 26]
         else:
-            ciphertext=ciphertext + plaintext[i]
+            ciphertext = ciphertext + plaintext[i]
     return ciphertext
 
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = ""
-    alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    lowalphabet =alphabet.lower()
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    lowalphabet = alphabet.lower()
     key = len(keyword)
 
     for i in range(len(ciphertext)):
@@ -31,7 +31,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         else:
             plaintext = plaintext + ciphertext[i]
     return plaintext
-print(decrypt_vigenere('LXFOPVEFRNHR', 'LEMONLEMONLE'))
+
 
 
 
