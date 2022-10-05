@@ -15,6 +15,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             ciphertext = ciphertext + plaintext[i]
     return ciphertext
 
+
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = ""
     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
