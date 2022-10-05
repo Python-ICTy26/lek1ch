@@ -1,4 +1,4 @@
-mport random
+import random
 from typing import Tuple
 
 
