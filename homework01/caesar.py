@@ -14,6 +14,7 @@ def encrypt_caesar(text: str, shift: int = 3) -> str:
                 plaintext = plaintext + chr((ord(char) + shift) - 26)
         elif char.isdigit() or not char.isupper() or not char.islower():
             plaintext = plaintext + char
+
     return plaintext
 
 
