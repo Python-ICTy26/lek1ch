@@ -27,7 +27,8 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     for row in range(9):
         print(
             "".join(
-                grid[row][col].center(width) + ("|" if str(col) in "25" else "") for col in range(9)
+                grid[row][col].center(width) + ("|" if str(col) in "25" else "")
+                for col in range(9)
             )
         )
         if str(row) in "25":
@@ -65,7 +66,9 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return a
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
+def find_empty_positions(
+    grid: tp.List[tp.List[str]],
+) -> tp.Optional[tp.Tuple[int, int]]:
     for index, row in enumerate(grid):
         if "." in row:
             return index, row.index(".")
@@ -75,7 +78,9 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
 all_values = {str(x) for x in range(1, 10)}
 
 
-def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
+def find_possible_values(
+    grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
+) -> tp.Set[str]:
     row = get_row(grid, pos)
     col = get_col(grid, pos)
     block_values = set(get_block(grid, pos))
@@ -92,7 +97,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    def get_solution(inGrid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+    def get_solution(
+        inGrid: tp.List[tp.List[str]],
+    ) -> tp.Optional[tp.List[tp.List[str]]]:
         empty_pos = find_empty_positions(inGrid)
         if empty_pos is None:
             return inGrid
