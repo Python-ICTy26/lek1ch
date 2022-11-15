@@ -10,6 +10,3 @@ class UI(abc.ABC):
     @abc.abstractmethod
     def run(self) -> None:
         pass
-    
-    
-
