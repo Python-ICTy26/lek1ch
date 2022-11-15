@@ -81,4 +81,3 @@ if __name__ == "__main__":
     gui = GUI(life=game, cell_size=20)
     gui.run()
     
-
