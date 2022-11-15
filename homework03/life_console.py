@@ -35,3 +35,4 @@ class Console(UI):
 life = GameOfLife((80, 30), max_generations=1000)
 ui = Console(life)
 ui.run()
+

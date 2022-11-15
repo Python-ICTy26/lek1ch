@@ -149,3 +149,4 @@ class GameOfLife:
 if __name__ == "__main__":
     game = GameOfLife(320 * 3, 240 * 3, 10, 100)
     game.run()
+    
