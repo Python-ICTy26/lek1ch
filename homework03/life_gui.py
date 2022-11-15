@@ -80,3 +80,4 @@ if __name__ == "__main__":
     game = GameOfLife(size=(20, 20), randomize=True)
     gui = GUI(life=game, cell_size=20)
     gui.run()
+    
