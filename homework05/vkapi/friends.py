@@ -16,7 +16,10 @@ class FriendsResponse:
 
 
 def get_friends(
-    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int,
+    count: int = 5000,
+    offset: int = 0,
+    fields: tp.Optional[tp.List[str]] = None,
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -28,7 +31,18 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    pass
+    params = {
+        "user_id": user_id,
+        "count": count,
+        "offset": offset,
+        "access_token": config.VK_CONFIG["access_token"],
+        "v": config.VK_CONFIG["version"],
+    }
+    if fields is not None:
+        params["fields"] = ",".join(fields)
+    response = session.get(url="friends.get", params=params)
+    response = FriendsResponse(**response["response"])
+    return response
 
 
 class MutualFriends(tp.TypedDict):
@@ -57,4 +71,47 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+    params = {
+        "order": order,
+        "offset": offset,
+        "v": config.VK_CONFIG["version"],
+        "access_token": config.VK_CONFIG["access_token"],
+    }
+
+    if order != "":
+        params["order"] = order
+    if count is not None:
+        params["count"] = count
+    if source_uid is not None:
+        params["source_uid"] = source_uid
+
+    if target_uid is not None:
+        params["target_uid"] = target_uid
+        mutual_ids = session.get("friends.getMutual", params=params)["response"]
+        return mutual_ids
+
+    elif target_uids is not None:
+        offset_iterator = list(range(0, len(target_uids), 100))
+        # apply callback function
+        if progress is not None:
+            offset_iterator = progress(offset_iterator)
+
+        params["target_uids"] = ",".join([str(i) for i in target_uids])
+
+        mutual_friends = []
+        for offset in offset_iterator:
+            params["offset"] = offset
+            time_start = time.time()
+            response = session.get("friends.getMutual", params=params)["response"]
+            for r in response:
+                r = MutualFriends(**r)
+                if r["common_count"] > 0:
+                    mutual_friends.append(r)
+
+            # make sure that we don't make too much requests
+            delay = max(1 / 3 - (time.time() - time_start), 0)
+            time.sleep(delay)
+        return mutual_friends
+
+    else:
+        raise ValueError("target_uid or target_uids should be specified")
