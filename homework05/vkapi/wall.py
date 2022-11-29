@@ -63,8 +63,10 @@ def get_wall_execute(
             "v": config.VK_CONFIG["version"],
         }
         count = session.post("execute", data=params)["response"]["count"] 
+    
     offsets_iterator = [
-        [q for q in range(i, i + max_count, max_count // 25) if q < count] 
+        [q for q in range(i, i + max_count, max_count // 25) if q < count]
+        
         for i in range(0, count, max_count)
     ]
     if progress is not None:
