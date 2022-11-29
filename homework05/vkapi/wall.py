@@ -23,7 +23,7 @@ def get_posts_2500(
         'access_token': config.VK_CONFIG['access_token'],
         'v': config.VK_CONFIG['version'],
     }
-    return session.get('wall.get', params=params)['response']
+    return session.get("wall.get", params=params)["response"]
 
 
 def get_wall_execute(
@@ -54,16 +54,17 @@ def get_wall_execute(
     """
 
     if count == 0:
-        code = f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});'
+        code = (f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});')
         params = {
-            'code': code,
-            'access_token': config.VK_CONFIG['access_token'],
-            'v': config.VK_CONFIG['version']
+            "code": code,
+            "access_token": config.VK_CONFIG["access_token"],
+            "v": config.VK_CONFIG["version"]
         }
-        count = session.post('execute', data=params)['response']['count']
+        count = session.post("execute", data=params)["response"]["count"]
 
     offsets_iterator = [
-        [q for q in range(i, i + max_count, max_count // 25) if q < count] for i in range(0, count, max_count)
+        [q for q in range(i, i + max_count, max_count // 25) if q < count] 
+        for i in range(0, count, max_count)
     ]
     if progress is not None:
         offsets_iterator = progress(offsets_iterator)
@@ -97,9 +98,9 @@ def get_wall_execute(
         """
 
         params = {
-            'code': code,
-            'access_token': config.VK_CONFIG['access_token'],
-            'v': config.VK_CONFIG['version'],
+            "code": code,
+            "access_token": config.VK_CONFIG["access_token"],
+            "v": config.VK_CONFIG["version"],
         }
         ts = time.time()
         new_posts = session.post('execute', params=params)['response']
