@@ -5,6 +5,7 @@ from string import Template
 
 import pandas as pd
 from pandas import json_normalize
+
 from vkapi import config, session
 from vkapi.exceptions import APIError
 
@@ -54,19 +55,16 @@ def get_wall_execute(
     """
 
     if count == 0:
-        code = (
-            f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});'
-        )
+        code = f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});'
         params = {
             "code": code,
             "access_token": config.VK_CONFIG["access_token"],
             "v": config.VK_CONFIG["version"],
         }
-        count = session.post("execute", data=params)["response"]["count"] 
-     
+        count = session.post("execute", data=params)["response"]["count"]
+
     offsets_iterator = [
         [q for q in range(i, i + max_count, max_count // 25) if q < count]
-  
         for i in range(0, count, max_count)
     ]
     if progress is not None:
