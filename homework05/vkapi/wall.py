@@ -71,7 +71,7 @@ def get_wall_execute(
     if progress is not None:
         offsets_iterator = progress(offsets_iterator)
 
-     = list()
+    posts = list()
 
     for offsets in offsets_iterator:
         code = f"""
