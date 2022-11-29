@@ -20,8 +20,8 @@ def get_posts_2500(
     fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
     params = {
-        'access_token': config.VK_CONFIG['access_token'],
-        'v': config.VK_CONFIG['version'],
+        "access_token": config.VK_CONFIG['access_token'],
+        "v": config.VK_CONFIG['version'],
     }
     return session.get("wall.get", params=params)["response"]
 
@@ -54,11 +54,13 @@ def get_wall_execute(
     """
 
     if count == 0:
-        code = (f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});')
+        code = (
+            f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});'
+        )
         params = {
             "code": code,
             "access_token": config.VK_CONFIG["access_token"],
-            "v": config.VK_CONFIG["version"]
+            "v": config.VK_CONFIG["version"],
         }
         count = session.post("execute", data=params)["response"]["count"]
 
@@ -69,7 +71,7 @@ def get_wall_execute(
     if progress is not None:
         offsets_iterator = progress(offsets_iterator)
 
-    posts = list()
+     = list()
 
     for offsets in offsets_iterator:
         code = f"""
@@ -103,10 +105,10 @@ def get_wall_execute(
             "v": config.VK_CONFIG["version"],
         }
         ts = time.time()
-        new_posts = session.post('execute', params=params)['response']
+        new_posts = session.post("execute", params=params)["response"]
         delay = max([0, 1 - (time.time() - ts)])
         time.sleep(delay)
-        posts.extend(new_posts['items'])
+        posts.extend(new_posts["items"])
         posts = [p for p in posts if p is not None]
 
     return json_normalize(posts)
