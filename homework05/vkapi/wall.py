@@ -20,8 +20,8 @@ def get_posts_2500(
     fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
     params = {
-        "access_token": config.VK_CONFIG['access_token'],
-        "v": config.VK_CONFIG['version'],
+        "access_token": config.VK_CONFIG["access_token"],
+        "v": config.VK_CONFIG["version"],
     }
     return session.get("wall.get", params=params)["response"]
 
