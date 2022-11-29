@@ -62,8 +62,7 @@ def get_wall_execute(
             "access_token": config.VK_CONFIG["access_token"],
             "v": config.VK_CONFIG["version"],
         }
-        count = session.post("execute", data=params)["response"]["count"]
-
+        count = session.post("execute", data=params)["response"]["count"] 
     offsets_iterator = [
         [q for q in range(i, i + max_count, max_count // 25) if q < count] 
         for i in range(0, count, max_count)
