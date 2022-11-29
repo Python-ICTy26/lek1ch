@@ -54,7 +54,9 @@ def get_wall_execute(
     """
 
     if count == 0:
-        code = f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});'
+        code = (
+            f'return API.wall.get({{"owner_id": "{owner_id}", "domain":"{domain}", "count": "1"}});'
+        )
         params = {
             "code": code,
             "access_token": config.VK_CONFIG["access_token"],
@@ -110,4 +112,3 @@ def get_wall_execute(
         posts = [p for p in posts if p is not None]
 
     return json_normalize(posts)
-

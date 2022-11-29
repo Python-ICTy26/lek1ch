@@ -74,4 +74,3 @@ class Session:
             raise ValueError(f"{method} is not supported")
 
         return response.json()
-
