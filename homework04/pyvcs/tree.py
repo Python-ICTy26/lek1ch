@@ -1,17 +1,16 @@
 import os
 import pathlib
-import stat
 import time
 import typing as tp
 
-from pyvcs.index import GitIndexEntry, read_index
+from pyvcs.index import GitIndexEntry, form_tree
 from pyvcs.objects import hash_object
-from pyvcs.refs import get_ref, is_detached, resolve_head, update_ref
 
 
 def write_tree(gitdir: pathlib.Path, index: tp.List[GitIndexEntry], dirname: str = "") -> str:
-    # PUT YOUR CODE HERE
-    ...
+    if len(index) > 1:
+        index = [file for file in index if "/" not in file.name]
+    return hash_object(form_tree(index), "tree")
 
 
 def commit_tree(
@@ -21,5 +20,6 @@ def commit_tree(
     parent: tp.Optional[str] = None,
     author: tp.Optional[str] = None,
 ) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    timest = int(time.mktime(time.localtime()))
+    data = f"tree {tree}\nauthor {author} {timest} +0300\ncommitter {author} {timest} +0300\n\n{message}\n"
+    return hash_object(data.encode(), "commit", True)
