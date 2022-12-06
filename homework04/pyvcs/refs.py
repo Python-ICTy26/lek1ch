@@ -3,30 +3,32 @@ import typing as tp
 
 
 def update_ref(gitdir: pathlib.Path, ref: tp.Union[str, pathlib.Path], new_value: str) -> None:
-    # PUT YOUR CODE HERE
-    ...
-
-
-def symbolic_ref(gitdir: pathlib.Path, name: str, ref: str) -> None:
-    # PUT YOUR CODE HERE
-    ...
+    with open(gitdir / ref, "w") as f:
+        f.write(new_value)
 
 
 def ref_resolve(gitdir: pathlib.Path, refname: str) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    with open(gitdir / refname) as f:
+        data = f.read().strip()
+    if data.startswith("ref: "):
+        data = data.removeprefix("ref: ")
+        with open(gitdir / data) as f:
+            data = f.read().strip()
+    return data
 
 
 def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
-    # PUT YOUR CODE HERE
-    ...
+    if (path := gitdir / "refs" / "heads" / "master").exists():
+        with open(path) as f:
+            return f.read()
+    return None
 
 
 def is_detached(gitdir: pathlib.Path) -> bool:
-    # PUT YOUR CODE HERE
-    ...
+    with open(gitdir / "HEAD") as f:
+        data = f.read().strip()
+    return not data.startswith("ref: ")
 
 
 def get_ref(gitdir: pathlib.Path) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    return "refs/heads/master"

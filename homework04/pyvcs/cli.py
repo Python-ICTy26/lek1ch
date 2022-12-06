@@ -3,7 +3,7 @@ import argparse
 from pyvcs.index import ls_files, read_index, update_index
 from pyvcs.objects import cat_file, hash_object
 from pyvcs.porcelain import checkout, commit
-from pyvcs.refs import ref_resolve, symbolic_ref, update_ref
+from pyvcs.refs import ref_resolve, update_ref
 from pyvcs.repo import repo_create, repo_find
 from pyvcs.tree import commit_tree, write_tree
 
@@ -62,7 +62,6 @@ def cmd_rev_parse(args: argparse.Namespace) -> None:
 
 def cmd_symbolic_ref(args: argparse.Namespace) -> None:
     gitdir = repo_find()
-    symbolic_ref(gitdir, args.name, args.ref)
 
 
 def cmd_commit(args: argparse.Namespace) -> None:
